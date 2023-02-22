@@ -1,10 +1,16 @@
 FROM debian:10
 
 # Set the working directory
-WORKDIR /app
+# WORKDIR /app
 
 # Copy application files to the container
-COPY app.py .
+# COPY app.py .
+
+
+FROM openjdk:8-slim
+
+COPY --from=builder /usr/src/easybuggy/target/easybuggy.jar 
+
 
 # Install dependencies
 RUN apt-get update && apt-get install -y python3

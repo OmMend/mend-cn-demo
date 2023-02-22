@@ -32,6 +32,10 @@ jobs:
 
     - name: Run Mend CLI and export results to SARIF
       run: |
+          export $MEND_ORG_UUID
+          export $MEND_USER_KEY
+          export $MEND_URL
+          export $MEND_EMAIL
           ./mend-cn/mend-cn $DOCKER_IMAGE_NAME --filter critical,high --format sarif > image-scans/$DOCKER_IMAGE_NAME.sarif
           
       
