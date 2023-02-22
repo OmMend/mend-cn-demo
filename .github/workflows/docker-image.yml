@@ -8,6 +8,10 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: my-app:1.0
+  MEND_ORG_UUID: ${{ secrets.MEND_ORG_UUID }}
+  MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
+  MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
+  MEND_URL: ${{ secrets.MEND_URL }}
   SCANNER_URL: https://example.com/mend-cn
 
 jobs:
@@ -19,7 +23,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag DOCKER_IMAGE_NAME
+      run: docker build . --file Dockerfile --tag $DOCKER_IMAGE_NAME
 
     - name: Download Mend CLI
       run: |
