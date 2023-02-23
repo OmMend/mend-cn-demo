@@ -1,4 +1,4 @@
-FROM debian:10
+FROM debian:10 as builder
 
 # Set the working directory
 # WORKDIR /app
@@ -9,7 +9,7 @@ FROM debian:10
 
 FROM openjdk:8-slim
 
-COPY --from=builder /usr/src/easybuggy/target/easybuggy.jar 
+COPY --from=builder /usr/src/easybuggy/target/easybuggy.jar /
 
 
 # Install dependencies
