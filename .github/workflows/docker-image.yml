@@ -8,10 +8,6 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: my-app:1.0
-  MEND_ORG_UUID: ${{ secrets.MEND_ORG_UUID }}
-  MEND_EMAIL: ${{ vars.MEND_EMAIL }}
-  MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
-  MEND_URL: ${{ vars.MEND_URL }}
   SCANNER_URL: https://example.com/mend-cn
 
 jobs:
@@ -32,10 +28,10 @@ jobs:
 
     - name: Run Mend CLI and export results to SARIF
       run: |
-          export $MEND_ORG_UUID
-          export $MEND_USER_KEY
-          export $MEND_URL
-          export $MEND_EMAIL
+          export ${{ secrets.MEND_ORG_UUID }}
+          export ${{ secrets.MEND_USER_KEY }}
+          export ${{ vars.MEND_URL }}
+          export ${{ vars.MEND_EMAIL }}
           ./mend-cn/mend $DOCKER_IMAGE_NAME --filter critical,high --format sarif > image-scans/$DOCKER_IMAGE_NAME.sarif
           
       
