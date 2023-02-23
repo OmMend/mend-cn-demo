@@ -9,8 +9,7 @@ FROM debian:10 as builder
 
 FROM openjdk:8-slim
 
-COPY --from=builder /usr/src/easybuggy/target/easybuggy.jar /
-
+# COPY --from=builder 
 
 # Install dependencies
 RUN apt-get update && apt-get install -y python3
