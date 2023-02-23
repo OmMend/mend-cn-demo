@@ -9,9 +9,9 @@ on:
 env:
   DOCKER_IMAGE_NAME: my-app:1.0
   MEND_ORG_UUID: ${{ secrets.MEND_ORG_UUID }}
-  MEND_EMAIL: ${{ secrets.MEND_EMAIL }}
+  MEND_EMAIL: ${{ env.MEND_EMAIL }}
   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
-  MEND_URL: ${{ secrets.MEND_URL }}
+  MEND_URL: ${{ env.MEND_URL }}
   SCANNER_URL: https://example.com/mend-cn
 
 jobs:
@@ -27,8 +27,8 @@ jobs:
 
     - name: Download Mend CLI
       run: |
-          # curl -o mend-cn $SCANNER_URL
-          chmod +x ./mend-cn/mend-cn
+          # curl -o mend $SCANNER_URL
+          chmod +x ./mend-cn/mend
 
     - name: Run Mend CLI and export results to SARIF
       run: |
@@ -36,7 +36,7 @@ jobs:
           export $MEND_USER_KEY
           export $MEND_URL
           export $MEND_EMAIL
-          ./mend-cn/mend-cn $DOCKER_IMAGE_NAME --filter critical,high --format sarif > image-scans/$DOCKER_IMAGE_NAME.sarif
+          ./mend-cn/mend $DOCKER_IMAGE_NAME --filter critical,high --format sarif > image-scans/$DOCKER_IMAGE_NAME.sarif
           
       
     - name: Push SARIF file to image-scans folder
