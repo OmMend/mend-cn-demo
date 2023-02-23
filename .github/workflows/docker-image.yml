@@ -9,9 +9,9 @@ on:
 env:
   DOCKER_IMAGE_NAME: my-app:1.0
   MEND_ORG_UUID: ${{ secrets.MEND_ORG_UUID }}
-  MEND_EMAIL: ${{ env.MEND_EMAIL }}
+  MEND_EMAIL: ${{ vars.MEND_EMAIL }}
   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
-  MEND_URL: ${{ env.MEND_URL }}
+  MEND_URL: ${{ vars.MEND_URL }}
   SCANNER_URL: https://example.com/mend-cn
 
 jobs:
