@@ -32,7 +32,7 @@ jobs:
 
     - name: Run Mend CLI and export results to SARIF
       run: |
-          ./mend-cn/mend $DOCKER_IMAGE_NAME --filter critical,high --format sarif > image-scans/$DOCKER_IMAGE_NAME.sarif
+          ./mend-cn/mend $DOCKER_IMAGE_NAME --filter critical,high # --format sarif > image-scans/$DOCKER_IMAGE_NAME.sarif
           
       
     - name: Push SARIF file to image-scans folder
