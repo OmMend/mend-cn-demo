@@ -27,12 +27,13 @@ jobs:
 
     - name: Download Mend CLI
       run: |
-          # curl -o mend $SCANNER_URL
-          chmod +x ./mend-cn/mend
+          curl -LO "https://downloads.mend.io/production/wcn/beta/linux_amd64/mend"
+          chmod +x mend
 
     - name: Run Mend CLI and export results to SARIF
       run: |
-          ./mend-cn/mend $DOCKER_IMAGE_NAME --filter critical,high # --format sarif > image-scans/$DOCKER_IMAGE_NAME.sarif
+          echo "Scanning your image with mend CLI scanner"
+          mend $DOCKER_IMAGE_NAME --filter critical,high # --format sarif > image-scans/$DOCKER_IMAGE_NAME.sarif
           
       
     - name: Push SARIF file to image-scans folder
@@ -47,6 +48,7 @@ jobs:
           CRITICAL_COUNT=`cat image-scans/$DOCKER_IMAGE_NAME.sarif | grep '"CRITICAL"' | wc -l`
           if [ $CRITICAL_COUNT -gt 0 ]; then
             echo "Found $CRITICAL_COUNT critical vulnerabilities"
+            echo "Build fails with exit code 1"
             exit 1
           fi    
           
