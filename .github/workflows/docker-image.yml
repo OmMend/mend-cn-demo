@@ -25,14 +25,11 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag $DOCKER_IMAGE_NAME
 
-    - name: Download Mend CLI
+    - name: Download Mend CLI & Run an image Scan
       run: |
           curl -LO "https://downloads.mend.io/production/wcn/beta/linux_amd64/mend"
           chmod +x mend
-
-    - name: Run Mend CLI and export results to SARIF
-      run: |
-          echo "Scanning your image with mend CLI scanner"
+          echo "Scanning your image with mend CLI scanner..."
           mend $DOCKER_IMAGE_NAME --filter critical,high # --format sarif > image-scans/$DOCKER_IMAGE_NAME.sarif
           
       
