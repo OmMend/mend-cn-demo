@@ -50,9 +50,7 @@ jobs:
     
     - name: tmp stage
       run: | 
-          ls -la | grep tmp
-          echo "........"
-          ls -la tmp.sarif
+          cat tmp.sarif/tmp.sarif
           
     
     - name: Securty Checkout (Fail build if critical vulnerabilities found)
