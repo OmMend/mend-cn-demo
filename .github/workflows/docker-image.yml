@@ -30,23 +30,17 @@ jobs:
           curl -LO "https://downloads.mend.io/production/wcn/beta/linux_amd64/mend"
           chmod +x mend
           echo "Scanning your image with mend CLI scanner..."
-          ./mend $DOCKER_IMAGE_NAME --filter critical,high --format sarif > image-scans/$DOCKER_IMAGE_NAME.sarif
+          ./mend $DOCKER_IMAGE_NAME --filter critical,high --format sarif > $DOCKER_IMAGE_NAME.sarif
 
-    - name: Upload scan result
+    - name: Upload scan results file
       uses: actions/upload-artifact@v3
       with:
           name: scan-results
-          path: image-scans/$DOCKER_IMAGE_NAME.sarif     
-          
-      
-    - name: Push SARIF file to image-scans folder
-      uses: actions/upload-artifact@v2
-      with:
-        name: scan-results
-        path: image-scans/$DOCKER_IMAGE_NAME.sarif
-
+          path: $DOCKER_IMAGE_NAME.sarif
+        
   security-checkout:
     runs-on: ubuntu-latest
+    needs: build
     steps:
     - name: Download scan results for security-checkout job
       uses: actions/download-artifact@v3
@@ -55,7 +49,7 @@ jobs:
         
     - name: Securty Checkout (Fail build if critical vulnerabilities found)
       run: |
-          CRITICAL_COUNT=`cat image-scans/$DOCKER_IMAGE_NAME.sarif | grep '"CRITICAL"' | wc -l`
+          CRITICAL_COUNT=`cat $DOCKER_IMAGE_NAME.sarif | grep '"CRITICAL"' | wc -l`
           if [ $CRITICAL_COUNT -gt 0 ]; then
             echo "Found $CRITICAL_COUNT critical vulnerabilities"
             echo "Build fails with exit code 1"
