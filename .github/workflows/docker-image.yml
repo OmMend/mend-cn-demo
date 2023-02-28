@@ -36,7 +36,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
           name: scan-results
-          path: tmp
+          path: tmp.sarif
         
   security-checkout:
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
           name: scan-results
-          path: tmp
+          path: tmp.sarif
     
     - name: tmp stage
       run: | 
@@ -55,7 +55,7 @@ jobs:
     
     - name: Securty Checkout (Fail build if critical vulnerabilities found)
       run: |
-          CRITICAL_COUNT=`cat tmp.sarif | grep '"CRITICAL"' | wc -l`
+          CRITICAL_COUNT=`cat tmp.sarif/tmp.sarif | grep '"CRITICAL"' | wc -l`
           echo "Critical=$CRITICAL_COUNT" 
           if [ $CRITICAL_COUNT -gt 0 ]; then
             echo "Found $CRITICAL_COUNT critical vulnerabilities"
