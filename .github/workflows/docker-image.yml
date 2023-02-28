@@ -47,7 +47,12 @@ jobs:
       with:
           name: scan-results
           path: tmp.sarif
-        
+    
+    - name: tmp stage
+      run: | 
+          ls -la | grep tmp
+          
+    
     - name: Securty Checkout (Fail build if critical vulnerabilities found)
       run: |
           CRITICAL_COUNT=`cat tmp.sarif | grep '"CRITICAL"' | wc -l`
