@@ -36,7 +36,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
           name: scan-results
-          path: tmp.sarif
+          path: tmp
         
   security-checkout:
     runs-on: ubuntu-latest
@@ -46,11 +46,11 @@ jobs:
       uses: actions/download-artifact@v3
       with:
           name: scan-results
-          path: tmp.sarif
+          path: tmp
     
     - name: tmp stage
       run: | 
-          cat tmp.sarif/tmp.sarif
+          cat tmp/tmp.sarif
           
     
     - name: Securty Checkout (Fail build if critical vulnerabilities found)
