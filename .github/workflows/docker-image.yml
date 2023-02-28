@@ -47,11 +47,7 @@ jobs:
       with:
           name: scan-results
           path: tmp.sarif
-    
-    - name: tmp stage
-      run: | 
-          cat tmp/tmp.sarif
-          
+             
     
     - name: Securty Checkout (Fail build if critical vulnerabilities found)
       run: |
