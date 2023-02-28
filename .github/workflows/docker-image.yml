@@ -31,6 +31,12 @@ jobs:
           chmod +x mend
           echo "Scanning your image with mend CLI scanner..."
           ./mend $DOCKER_IMAGE_NAME --filter critical,high --no-color > image-scans/$DOCKER_IMAGE_NAME # --format sarif > image-scans/$DOCKER_IMAGE_NAME.sarif
+
+    - name: Upload scan result
+      uses: actions/upload-artifact@v3
+      with:
+          name: scan-results
+          path: image-scans/$DOCKER_IMAGE_NAME.sarif     
           
       
     - name: Push SARIF file to image-scans folder
@@ -38,9 +44,13 @@ jobs:
       with:
         name: scan-results
         path: image-scans/$DOCKER_IMAGE_NAME.sarif
+
+    - name: Download scan results for security-checkout job
+      uses: actions/download-artifact@v3
+      with:
+          name: scan-results  
         
-        
-    - name: Fail if critical vulnerabilities found
+    - name: Securty Checkout (Fail build if critical vulnerabilities found)
       run: |
           CRITICAL_COUNT=`cat image-scans/$DOCKER_IMAGE_NAME.sarif | grep '"CRITICAL"' | wc -l`
           if [ $CRITICAL_COUNT -gt 0 ]; then
