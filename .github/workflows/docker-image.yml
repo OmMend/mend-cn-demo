@@ -45,6 +45,9 @@ jobs:
         name: scan-results
         path: image-scans/$DOCKER_IMAGE_NAME.sarif
 
+  security-checkout:
+    runs-on: ubuntu-latest
+    steps:
     - name: Download scan results for security-checkout job
       uses: actions/download-artifact@v3
       with:
