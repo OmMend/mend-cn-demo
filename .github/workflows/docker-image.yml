@@ -31,7 +31,7 @@ jobs:
           curl -LO "https://downloads.mend.io/production/wcn/beta/linux_amd64/mend"
           chmod +x mend
           echo "Scanning your image with mend CLI scanner..."
-          ./mend $DOCKER_IMAGE_NAME --filter critical,high --format sarif > tmp.sarif
+          ./mend $DOCKER_IMAGE_NAME --filter critical,high # --format sarif > tmp.sarif
 
     - name: Upload scan results file
       uses: actions/upload-artifact@v3
