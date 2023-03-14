@@ -9,7 +9,6 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: my-github-app:1.0
-  SCANNER_URL: https://downloads.mend.io/production/unified/latest/linux_amd64/mend
   MEND_ORG_UUID: ${{ secrets.MEND_ORG_UUID }}
   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
   MEND_URL: ${{ vars.MEND_URL }}
@@ -28,7 +27,7 @@ jobs:
 
     - name: Download Mend CLI & Run an image Scan
       run: |
-          curl -LO $SCANNER_URL
+          curl -LO https://downloads.mend.io/production/unified/latest/linux_amd64/mend
           chmod +x mend
           echo "Scanning your image with mend CLI scanner..."
           ./mend image $DOCKER_IMAGE_NAME --filter critical,high # --format sarif > tmp.sarif
