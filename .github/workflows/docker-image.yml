@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_IMAGE_NAME: my-github-app:1.0
+  DOCKER_IMAGE_NAME: my-github-app:${{ github.run_number }}
   MEND_ORG_UUID: ${{ secrets.MEND_ORG_UUID }}
   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
   MEND_URL: ${{ vars.MEND_URL }}
