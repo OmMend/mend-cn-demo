@@ -30,8 +30,13 @@ jobs:
           curl -LO https://downloads.mend.io/production/unified/latest/linux_amd64/mend
           chmod +x mend
           echo "Scanning your image with mend CLI scanner..."
-          ./mend image $DOCKER_IMAGE_NAME --filter critical,high ## --format sarif --filename tmp.sarif
+          ./mend image $DOCKER_IMAGE_NAME --filter critical,high --format sarif --filename tmp.sarif
 
+    - name: Upload sarif
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: tmp.sarif
+        
     - name: Upload scan results file
       uses: actions/upload-artifact@v3
       with:
@@ -47,11 +52,7 @@ jobs:
       with:
           name: scan-results
           path: tmp.sarif
-   
-    - name: Upload sarif
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: tmp.sarif
+
     
     - name: Securty Checkout (Fail build if critical vulnerabilities found)
       run: |
