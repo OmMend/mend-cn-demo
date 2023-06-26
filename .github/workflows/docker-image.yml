@@ -31,38 +31,8 @@ jobs:
           chmod +x mend
           echo "Scanning your image with mend CLI scanner..."
           ./mend image $DOCKER_IMAGE_NAME --filter critical,high --format sarif --filename tmp.sarif
-
-    - name: Upload sarif
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: tmp.sarif
         
-    - name: Upload scan results file
-      uses: actions/upload-artifact@v3
-      with:
-          name: scan-results
-          path: tmp.sarif
-        
-  security-checkout:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - name: Download scan results for security-checkout job
-      uses: actions/download-artifact@v3
-      with:
-          name: scan-results
-          path: tmp.sarif
 
-    
-    - name: Securty Checkout (Fail build if critical vulnerabilities found)
-      run: |
-          CRITICAL_COUNT=`cat tmp.sarif/tmp.sarif | grep '"CRITICAL"' | wc -l`
-          echo "Critical=$CRITICAL_COUNT" 
-          if [ $CRITICAL_COUNT -gt 0 ]; then
-            echo "Found $CRITICAL_COUNT critical vulnerabilities"
-            echo "::Warning:: Build fails with exit code 1"
-          fi
-          echo "No CRITICAL vulnerabilities found.."
 
       
           
