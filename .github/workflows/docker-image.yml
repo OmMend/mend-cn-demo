@@ -30,7 +30,7 @@ jobs:
           curl -LO https://downloads.mend.io/production/unified/latest/linux_amd64/mend
           chmod +x mend
           echo "Scanning your image with mend CLI scanner..."
-          ./mend image $DOCKER_IMAGE_NAME --filter critical,high --format sarif --filename tmp.sarif
+          ./mend image $DOCKER_IMAGE_NAME --filter critical,high
         
 
 
