@@ -34,7 +34,7 @@ jobs:
           ./mend image $DOCKER_IMAGE_NAME --filter critical,high --format sarif --filename results.sarif
 
     - name: Upload sarif
-      uses: github/codeql-action/upload-sarif@v1
+      uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: results.sarif
 
