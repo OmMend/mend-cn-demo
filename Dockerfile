@@ -12,7 +12,9 @@ FROM openjdk:8-slim
 # COPY --from=builder 
 
 # Install dependencies
-RUN apt-get update && apt-get install -y python3
+RUN apt-get update && apt-get install -y \ 
+python3 \
+pip
 
 # Expose the application port
 
