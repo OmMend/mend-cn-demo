@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_IMAGE_NAME: my-github-app:${{ github.run_number }}
+  DOCKER_IMAGE_NAME: cn-demo:dev-${{ github.run_number }}
   MEND_ORG_UUID: ${{ secrets.MEND_ORG_UUID }}
   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
   MEND_URL: ${{ vars.MEND_URL }}
@@ -18,9 +18,7 @@ env:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
@@ -33,11 +31,35 @@ jobs:
           echo "Scanning your image with mend CLI scanner..."
           ./mend image $DOCKER_IMAGE_NAME --filter critical,high --format sarif --filename results.sarif
 
-    - name: Upload sarif
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: results.sarif
+#    - name: Upload sarif
+#      uses: github/codeql-action/upload-sarif@v2
+#      with:
+#        sarif_file: results.sarif
 
+  push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Auth to ECR
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.SECRET_KEY }}
+        aws-region: eu-north-1
+        
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+      
+    - name: Push the Docker image to ECR registry
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: cn-demo
+      run: |
+        docker tag $DOCKER_IMAGE_NAME $ECR_REGISTRY/$DOCKER_IMAGE_NAME
+        docker push $ECR_REGISTRY/$DOCKER_IMAGE_NAME
         
 
 
