@@ -20,5 +20,5 @@ pip
 
 # Start the application
 CMD ["python3", "app.py"]
-LABEL io.mend.image.dockerfile.path=$GITHUB_WORKSPACE
-LABEL org.opencontainers.image.source=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY
+LABEL io.mend.image.dockerfile.path=Dockerfile
+LABEL org.opencontainers.image.source=https://github.com/OmMend/mend-cn-demo/tree/main
