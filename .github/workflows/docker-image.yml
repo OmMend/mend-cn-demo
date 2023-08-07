@@ -13,6 +13,7 @@ env:
   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
   MEND_URL: ${{ vars.MEND_URL }}
   MEND_EMAIL: ${{ vars.MEND_EMAIL }}
+  MEND_CN_UAT: true
 
 jobs:
 
