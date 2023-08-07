@@ -20,5 +20,5 @@ pip
 
 # Start the application
 CMD ["python3", "app.py"]
-LABEL io.mend.image.dockerfile.path=/main/Dockerfile
+LABEL io.mend.image.dockerfile.path=main/Dockerfile
 LABEL org.opencontainers.image.source=https://github.com/OmMend/mend-cn-demo
