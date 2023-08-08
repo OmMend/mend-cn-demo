@@ -1,20 +1,9 @@
-FROM debian:11-slim as builder
-
-# Set the working directory
-# WORKDIR /app
-
-# Copy application files to the container
-# COPY app.py .
-
-
-FROM openjdk:22-slim
-
-# COPY --from=builder 
+FROM postgres:alpine3.18
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \ 
+RUN apk update && apk add --no-cache \
 python3 \
-pip
+py3-pip
 
 LABEL io.mend.image.dockerfile.path=main/Dockerfile
 LABEL org.opencontainers.image.source=https://github.com/OmMend/mend-cn-demo
