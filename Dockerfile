@@ -7,7 +7,7 @@ FROM debian:11-slim as builder
 # COPY app.py .
 
 
-FROM openjdk:8-slim
+FROM openjdk:22-slim
 
 # COPY --from=builder 
 
