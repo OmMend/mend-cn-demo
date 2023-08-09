@@ -29,7 +29,7 @@ jobs:
         version: latest
     - name: Build the Docker image
       run: |
-        docker buildx build --platform=linux/arm64 . --file Dockerfile --tag omerdahan/cn_text:$DOCKER_TAG --load
+        docker buildx build --platform=linux/arm64 . --file Dockerfile --tag omerdahan/cn_test:$DOCKER_TAG --load
         docker images
 
     - name: Download Mend CLI & Run an image Scan
