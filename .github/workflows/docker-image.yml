@@ -34,7 +34,7 @@ jobs:
 
     - name: Download Mend CLI & Run an image Scan
       run: |
-          curl -LO https://downloads.mend.io/production/unified/latest/linux_amd64/mend
+          curl -LO https://downloads.mend.io/cli/linux_amd64/mend
           chmod +x mend
           echo "Scanning your image with mend CLI scanner..."
           ./mend image omerdahan/cn_test:$DOCKER_TAG
