@@ -37,12 +37,12 @@ jobs:
           curl -LO https://downloads.mend.io/cli/linux_amd64/mend
           chmod +x mend
           echo "Scanning your image with mend CLI scanner..."
-          ./mend image omerdahan/cn_test:$DOCKER_TAG
+          ./mend image omerdahan/cn_test:$DOCKER_TAG --format sarif --filename results.sarif --filter high,critical
 
-#    - name: Upload sarif
-#      uses: github/codeql-action/upload-sarif@v2
-#      with:
-#        sarif_file: results.sarif
+    - name: Upload sarif
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: results.sarif
 
     
     - name: Auth to ECR
