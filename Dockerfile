@@ -1,6 +1,4 @@
-FROM debian:11-slim as builder
-
-FROM openjdk:22-slim
+FROM nginx:latest
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \ 
