@@ -32,14 +32,18 @@ jobs:
         docker buildx build --platform=linux/arm64 . --file Dockerfile --tag omerdahan/cn_test:$DOCKER_TAG --load
         docker images
 
-    - name: Download Mend CLI & Run an image Scan
+    - name: Download Mend CLI
       run: |
           curl -LO https://downloads.mend.io/cli/linux_amd64/mend
           chmod +x mend
+          echo "Download Finished.."
+          
+    - name: Run an image Scan
+      run: |
           echo "Scanning your image with mend CLI scanner..."
           ./mend image omerdahan/cn_test:$DOCKER_TAG --format sarif --filename results.sarif --filter high,critical
           echo "Scan Finished with code: $?"
-
+      
     - name: Upload sarif
       uses: github/codeql-action/upload-sarif@v3
       with:
