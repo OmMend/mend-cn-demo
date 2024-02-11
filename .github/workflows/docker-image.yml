@@ -9,6 +9,7 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: cn-demo
+  DOCKER_REPO_NAME: omerdahan/cn_test
   DOCKER_TAG: dev-${{ github.run_number }}
   MEND_ORG_UUID: ${{ secrets.MEND_ORG_UUID }}
   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
@@ -29,7 +30,7 @@ jobs:
         version: latest
     - name: Build the Docker image
       run: |
-        docker buildx build --platform=linux/arm64 . --file Dockerfile --tag omerdahan/cn_test:$DOCKER_TAG --load
+        docker buildx build --platform=linux/arm64 . --file Dockerfile --tag $DOCKER_REPO_NAME:$DOCKER_TAG --load
         docker images
 
     - name: Download Mend CLI
@@ -41,7 +42,7 @@ jobs:
     - name: Run an image Scan
       run: |
           echo "Scanning your image with mend CLI scanner..."
-          ./mend image omerdahan/cn_test:$DOCKER_TAG --format sarif --filename results.sarif --filter high,critical
+          ./mend image $DOCKER_REPO_NAME:$DOCKER_TAG --format sarif --filename results.sarif --filter high,critical
           echo "Scan Finished with code: $?"
       
     - name: Upload sarif
@@ -66,7 +67,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: cn-demo
       run: |
-        docker tag omerdahan/cn_test:$DOCKER_TAG $ECR_REGISTRY/$DOCKER_IMAGE_NAME:$DOCKER_TAG
+        docker tag $DOCKER_REPO_NAME:$DOCKER_TAG $ECR_REGISTRY/$DOCKER_IMAGE_NAME:$DOCKER_TAG
         docker push $ECR_REGISTRY/$DOCKER_IMAGE_NAME:$DOCKER_TAG
 
     - name: Log in to Docker Hub
@@ -77,7 +78,7 @@ jobs:
     
     - name: Push the Docker image to DockerHub
       run: |
-        docker push omerdahan/cn_test:$DOCKER_TAG
+        docker push $DOCKER_REPO_NAME:$DOCKER_TAG
         
 
 
