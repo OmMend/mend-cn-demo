@@ -9,7 +9,7 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: cn-demo
-  DOCKER_REPO_NAME: cloudnative/cn_test
+  DOCKER_REPO_NAME: omerdahan/cn_test
   DOCKER_TAG: dev-${{ github.run_number }}
   MEND_ORG_UUID: ${{ secrets.MEND_ORG_UUID }}
   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
