@@ -37,6 +37,8 @@ jobs:
       run: |
           curl -LO https://downloads.mend.io/cli/linux_amd64/mend
           chmod +x mend
+          ls -la
+          ./mend image --help
           echo "Scanning your image with mend CLI scanner..."
           ./mend image $DOCKER_REPO_NAME:$DOCKER_TAG --format sarif --filename results.sarif --filter high,critical
           echo "Scan Finished with code: $?"
