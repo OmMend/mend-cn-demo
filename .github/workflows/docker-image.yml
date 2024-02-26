@@ -9,7 +9,7 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: cn-demo
-  DOCKER_REPO_NAME: omerdahan/cn_test
+  DOCKER_REPO_NAME: cloudnative/cn_test
   DOCKER_TAG: dev-${{ github.run_number }}
   MEND_ORG_UUID: ${{ secrets.MEND_ORG_UUID }}
   MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
@@ -37,10 +37,7 @@ jobs:
       run: |
           curl -LO https://downloads.mend.io/cli/linux_amd64/mend
           chmod +x mend
-          ls -la
           ./mend image --help
-          echo "Test Scan"
-          ./mend image alpine:3.15.2
           echo "Scanning your image with mend CLI scanner..."
           ./mend image $DOCKER_REPO_NAME:$DOCKER_TAG --format sarif --filename results.sarif --filter high,critical
           echo "Scan Finished with code: $?"
