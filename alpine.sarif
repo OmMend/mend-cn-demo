@@ -34,7 +34,7 @@
                                     "security",
                                     "LOW"
                                 ],
-                                "security-severity": "3.0"
+                                "security-severity": "0"
                             }
                         }
                     ],
