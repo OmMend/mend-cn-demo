@@ -1,0 +1,37 @@
+name: alpine scan and upload
+
+on:
+  workflow_dispatch:
+
+env:
+  DOCKER_IMAGE_NAME: cn-demo
+  DOCKER_REPO_NAME: omerdahan/cn_test
+  DOCKER_TAG: dev-${{ github.run_number }}
+  MEND_ORG_UUID: ${{ secrets.MEND_ORG_UUID }}
+  MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
+  MEND_URL: ${{ vars.MEND_URL }}
+  MEND_EMAIL: ${{ vars.MEND_EMAIL }}
+  MEND_CN_UAT: true
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: install buildx
+      id: buildx
+      uses: crazy-max/ghaction-docker-buildx@v1
+      with:
+        version: latest
+
+    - name: Download Mend CLI & Run a Scan
+      run: |
+          curl -LO https://downloads.mend.io/cli/linux_amd64/mend
+          chmod +x mend
+          ./mend image alpine --format sarif --filename alpine-results.sarif
+      
+    - name: Upload sarif
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: alpine-results.sarif
