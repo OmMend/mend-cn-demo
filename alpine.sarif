@@ -33,8 +33,7 @@
                                     "vulnerability",
                                     "security",
                                     "LOW"
-                                ],
-                                "severity": "LOW"
+                                ]
                             }
                         },
                         {
@@ -241,7 +240,11 @@
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "properties": {
+                        "severity": "LOW"
+                    }
+
                 },
                 {
                     "ruleId": "CVE-2024-2511",
@@ -258,7 +261,10 @@
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "properties": {
+                        "severity": "LOW"
+                    }
                 },
                 {
                     "ruleId": "BSD-2-Clause",
