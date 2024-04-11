@@ -226,9 +226,9 @@
             },
             "results": [
                 {
-                    "ruleId": "CVE-2024-2511-TEST",
+                    "ruleId": "CVE-2024-2511",
                     "ruleIndex": 0,
-                    "level": "error",
+                    "level": "LOW",
                     "message": {
                         "text": "Package: libcrypto3\nInstalled Version: 3.1.4-r5\nVulnerability CVE-2024-2511\nSeverity: LOW\nFixed Version: 3.1.4-r6\nLink: [CVE-2024-2511](https://www.mend.io/vulnerability-database/CVE-2024-2511)"
                     },
@@ -245,7 +245,7 @@
                 {
                     "ruleId": "CVE-2024-2511",
                     "ruleIndex": 0,
-                    "level": "error",
+                    "level": "LOW",
                     "message": {
                         "text": "Package: libssl3\nInstalled Version: 3.1.4-r5\nVulnerability CVE-2024-2511\nSeverity: LOW\nFixed Version: 3.1.4-r6\nLink: [CVE-2024-2511](https://www.mend.io/vulnerability-database/CVE-2024-2511)"
                     },
