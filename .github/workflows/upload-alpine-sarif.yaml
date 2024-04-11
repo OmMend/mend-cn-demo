@@ -1,5 +1,18 @@
 name: alpine upload existing sarif
 
+on:
+  workflow_dispatch:
+
+env:
+  DOCKER_IMAGE_NAME: cn-demo
+  DOCKER_REPO_NAME: omerdahan/cn_test
+  DOCKER_TAG: dev-${{ github.run_number }}
+  MEND_ORG_UUID: ${{ secrets.MEND_ORG_UUID }}
+  MEND_USER_KEY: ${{ secrets.MEND_USER_KEY }}
+  MEND_URL: ${{ vars.MEND_URL }}
+  MEND_EMAIL: ${{ vars.MEND_EMAIL }}
+  MEND_CN_UAT: true
+
 jobs:
 
   build:
@@ -11,8 +24,8 @@ jobs:
       uses: crazy-max/ghaction-docker-buildx@v1
       with:
         version: latest
-      
+
     - name: Upload sarif
       uses: github/codeql-action/upload-sarif@v3
       with:
-        sarif_file: alpine.sarif
+        sarif_file: alpine-results.sarif
