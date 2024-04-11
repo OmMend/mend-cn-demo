@@ -1,4 +1,4 @@
-name: alpine scan and upload
+name: alpine upload existing sarif
 
 jobs:
 
