@@ -28,7 +28,7 @@
                             },
                             "properties": {
                                 "score": "7.5",
-                                "security-severity": "7.5",
+                                "security-severity": "0",
                                 "epss": "0",
                                 "tags": [
                                     "vulnerability",
