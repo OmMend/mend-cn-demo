@@ -28,7 +28,7 @@
               },
               "properties": {
                 "precision": "very-high",
-                "security-severity": "2.0",
+                "security-severity": "0",
                 "tags": [
                   "vulnerability",
                   "security",
