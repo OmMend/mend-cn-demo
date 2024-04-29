@@ -10,226 +10,30 @@
                     "name": "Mend",
                     "rules": [
                         {
-                            "id": "CVE-2023-39325",
-                            "name": "LangPackageVulnerability",
+                            "id": "CVE-2024-2511",
+                            "name": "OsPackageVulnerability",
                             "shortDescription": {
-                                "text": "CVE-2023-39325"
+                                "text": "CVE-2024-2511"
                             },
                             "fullDescription": {
-                                "text": "A malicious HTTP/2 client which rapidly creates requests and immediately resets them can cause excessive server resource consumption. While the total number of requests is bounded by the http2.Server.MaxConcurrentStreams setting, resetting an in-progress request allows the attacker to create a new request while the existing one is still executing. With the fix applied, HTTP/2 servers now bound the number of simultaneously executing handler goroutines to the stream concurrency limit (MaxConcurrentStreams). New requests arriving when at the limit (which can only happen after the client has reset an existing, in-flight request) will be queued until a handler exits. If the request queue grows too large, the server will terminate the connection. This issue is also fixed in golang.org/x/net/http2 for users manually configuring HTTP/2. The default stream concurrency limit is 250 streams (requests) per HTTP/2 connection. This value may be adjusted using the golang.org/x/net/http2 package; see the Server.MaxConcurrentStreams setting and the ConfigureServer function."
+                                "text": "Issue summary: Some non-default TLS server configurations can cause unbounded\nmemory growth when processing TLSv1.3 sessions\n\nImpact summary: An attacker may exploit certain server configurations to trigger\nunbounded memory growth that would lead to a Denial of Service\n\nThis problem can occur in TLSv1.3 if the non-default SSL_OP_NO_TICKET option is\nbeing used (but not if early_data support is also configured and the default\nanti-replay protection is in use). In this case, under certain conditions, the\nsession cache can get into an incorrect state and it will fail to flush properly\nas it fills. The session cache will continue to grow in an unbounded manner. A\nmalicious client could deliberately create the scenario for this failure to\nforce a Denial of Service. It may also happen by accident in normal operation.\n\nThis issue only affects TLS servers supporting TLSv1.3. It does not affect TLS\nclients.\n\nThe FIPS modules in 3.2, 3.1 and 3.0 are not affected by this issue. OpenSSL\n1.0.2 is also not affected by this issue."
                             },
                             "defaultConfiguration": {
                                 "level": "error"
                             },
-                            "helpUri": "https://www.mend.io/vulnerability-database/CVE-2023-39325",
+                            "helpUri": "https://www.mend.io/vulnerability-database/CVE-2024-2511",
                             "help": {
-                                "text": "Vulnerability: CVE-2023-39325\nSeverity: HIGH\nPackage: golang.org/x/net\nFixed Version: 0.17.0\nLink: [CVE-2023-39325](https://www.mend.io/vulnerability-database/CVE-2023-39325)\nA malicious HTTP/2 client which rapidly creates requests and immediately resets them can cause excessive server resource consumption. While the total number of requests is bounded by the http2.Server.MaxConcurrentStreams setting, resetting an in-progress request allows the attacker to create a new request while the existing one is still executing. With the fix applied, HTTP/2 servers now bound the number of simultaneously executing handler goroutines to the stream concurrency limit (MaxConcurrentStreams). New requests arriving when at the limit (which can only happen after the client has reset an existing, in-flight request) will be queued until a handler exits. If the request queue grows too large, the server will terminate the connection. This issue is also fixed in golang.org/x/net/http2 for users manually configuring HTTP/2. The default stream concurrency limit is 250 streams (requests) per HTTP/2 connection. This value may be adjusted using the golang.org/x/net/http2 package; see the Server.MaxConcurrentStreams setting and the ConfigureServer function.",
-                                "markdown": "**Vulnerability CVE-2023-39325**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|HIGH|golang.org/x/net|0.17.0|[CVE-2023-39325](https://www.mend.io/vulnerability-database/CVE-2023-39325)|\n\nA malicious HTTP/2 client which rapidly creates requests and immediately resets them can cause excessive server resource consumption. While the total number of requests is bounded by the http2.Server.MaxConcurrentStreams setting, resetting an in-progress request allows the attacker to create a new request while the existing one is still executing. With the fix applied, HTTP/2 servers now bound the number of simultaneously executing handler goroutines to the stream concurrency limit (MaxConcurrentStreams). New requests arriving when at the limit (which can only happen after the client has reset an existing, in-flight request) will be queued until a handler exits. If the request queue grows too large, the server will terminate the connection. This issue is also fixed in golang.org/x/net/http2 for users manually configuring HTTP/2. The default stream concurrency limit is 250 streams (requests) per HTTP/2 connection. This value may be adjusted using the golang.org/x/net/http2 package; see the Server.MaxConcurrentStreams setting and the ConfigureServer function."
+                                "text": "Vulnerability: CVE-2024-2511\nSeverity: LOW\nPackage: * openssl\nFixed Version: 3.1.4-r6\nLink: [CVE-2024-2511](https://www.mend.io/vulnerability-database/CVE-2024-2511)\nIssue summary: Some non-default TLS server configurations can cause unbounded\nmemory growth when processing TLSv1.3 sessions\n\nImpact summary: An attacker may exploit certain server configurations to trigger\nunbounded memory growth that would lead to a Denial of Service\n\nThis problem can occur in TLSv1.3 if the non-default SSL_OP_NO_TICKET option is\nbeing used (but not if early_data support is also configured and the default\nanti-replay protection is in use). In this case, under certain conditions, the\nsession cache can get into an incorrect state and it will fail to flush properly\nas it fills. The session cache will continue to grow in an unbounded manner. A\nmalicious client could deliberately create the scenario for this failure to\nforce a Denial of Service. It may also happen by accident in normal operation.\n\nThis issue only affects TLS servers supporting TLSv1.3. It does not affect TLS\nclients.\n\nThe FIPS modules in 3.2, 3.1 and 3.0 are not affected by this issue. OpenSSL\n1.0.2 is also not affected by this issue.",
+                                "markdown": "**Vulnerability CVE-2024-2511**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|LOW|* openssl|3.1.4-r6|[CVE-2024-2511](https://www.mend.io/vulnerability-database/CVE-2024-2511)|\n\nIssue summary: Some non-default TLS server configurations can cause unbounded\nmemory growth when processing TLSv1.3 sessions\n\nImpact summary: An attacker may exploit certain server configurations to trigger\nunbounded memory growth that would lead to a Denial of Service\n\nThis problem can occur in TLSv1.3 if the non-default SSL_OP_NO_TICKET option is\nbeing used (but not if early_data support is also configured and the default\nanti-replay protection is in use). In this case, under certain conditions, the\nsession cache can get into an incorrect state and it will fail to flush properly\nas it fills. The session cache will continue to grow in an unbounded manner. A\nmalicious client could deliberately create the scenario for this failure to\nforce a Denial of Service. It may also happen by accident in normal operation.\n\nThis issue only affects TLS servers supporting TLSv1.3. It does not affect TLS\nclients.\n\nThe FIPS modules in 3.2, 3.1 and 3.0 are not affected by this issue. OpenSSL\n1.0.2 is also not affected by this issue."
                             },
                             "properties": {
-                                "score": "7.5",
+                                "score": "0",
                                 "security-severity": "0",
                                 "epss": "0",
                                 "tags": [
                                     "vulnerability",
                                     "security",
-                                    "HIGH"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "CVE-2023-44487",
-                            "name": "LangPackageVulnerability",
-                            "shortDescription": {
-                                "text": "CVE-2023-44487"
-                            },
-                            "fullDescription": {
-                                "text": "The HTTP/2 protocol allows a denial of service (server resource consumption) because request cancellation can reset many streams quickly, as exploited in the wild in August through October 2023."
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "helpUri": "https://www.mend.io/vulnerability-database/CVE-2023-44487",
-                            "help": {
-                                "text": "Vulnerability: CVE-2023-44487\nSeverity: HIGH\nPackage: golang.org/x/net\nFixed Version: 0.17.0\nLink: [CVE-2023-44487](https://www.mend.io/vulnerability-database/CVE-2023-44487)\nThe HTTP/2 protocol allows a denial of service (server resource consumption) because request cancellation can reset many streams quickly, as exploited in the wild in August through October 2023.",
-                                "markdown": "**Vulnerability CVE-2023-44487**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|HIGH|golang.org/x/net|0.17.0|[CVE-2023-44487](https://www.mend.io/vulnerability-database/CVE-2023-44487)|\n\nThe HTTP/2 protocol allows a denial of service (server resource consumption) because request cancellation can reset many streams quickly, as exploited in the wild in August through October 2023."
-                            },
-                            "properties": {
-                                "score": "7.5",
-                                "security-severity": "7.5",
-                                "epss": "0.73",
-                                "tags": [
-                                    "vulnerability",
-                                    "security",
-                                    "HIGH"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "CVE-2023-48795",
-                            "name": "LangPackageVulnerability",
-                            "shortDescription": {
-                                "text": "CVE-2023-48795"
-                            },
-                            "fullDescription": {
-                                "text": "The SSH transport protocol with certain OpenSSH extensions, found in OpenSSH before 9.6 and other products, allows remote attackers to bypass integrity checks such that some packets are omitted (from the extension negotiation message), and a client and server may consequently end up with a connection for which some security features have been downgraded or disabled, aka a Terrapin attack. This occurs because the SSH Binary Packet Protocol (BPP), implemented by these extensions, mishandles the handshake phase and mishandles use of sequence numbers. For example, there is an effective attack against SSH's use of ChaCha20-Poly1305 (and CBC with Encrypt-then-MAC). The bypass occurs in chacha20-poly1305@openssh.com and (if CBC is used) the -etm@openssh.com MAC algorithms. This also affects Maverick Synergy Java SSH API before 3.1.0-SNAPSHOT, Dropbear through 2022.83, Ssh before 5.1.1 in Erlang/OTP, PuTTY before 0.80, AsyncSSH before 2.14.2, golang.org/x/crypto before 0.17.0, libssh before 0.10.6, libssh2 through 1.11.0, Thorn Tech SFTP Gateway before 3.4.6, Tera Term before 5.1, Paramiko before 3.4.0, jsch before 0.2.15, SFTPGo before 2.5.6, Netgate pfSense Plus through 23.09.1, Netgate pfSense CE through 2.7.2, HPN-SSH through 18.2.0, ProFTPD before 1.3.8b (and before 1.3.9rc2), ORYX CycloneSSH before 2.3.4, NetSarang XShell 7 before Build 0144, CrushFTP before 10.6.0, ConnectBot SSH library before 2.2.22, Apache MINA sshd through 2.11.0, sshj through 0.37.0, TinySSH through 20230101, trilead-ssh2 6401, LANCOM LCOS and LANconfig, FileZilla before 3.66.4, Nova before 11.8, PKIX-SSH before 14.4, SecureCRT before 9.4.3, Transmit5 before 5.10.4, Win32-OpenSSH before 9.5.0.0p1-Beta, WinSCP before 6.2.2, Bitvise SSH Server before 9.32, Bitvise SSH Client before 9.33, KiTTY through 0.76.1.13, the net-ssh gem 7.2.0 for Ruby, the mscdex ssh2 module before 1.15.0 for Node.js, the thrussh library before 0.35.1 for Rust, and the Russh crate before 0.40.2 for Rust."
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "helpUri": "https://www.mend.io/vulnerability-database/CVE-2023-48795",
-                            "help": {
-                                "text": "Vulnerability: CVE-2023-48795\nSeverity: MEDIUM\nPackage: golang.org/x/crypto\nFixed Version: 0.17.0\nLink: [CVE-2023-48795](https://www.mend.io/vulnerability-database/CVE-2023-48795)\nThe SSH transport protocol with certain OpenSSH extensions, found in OpenSSH before 9.6 and other products, allows remote attackers to bypass integrity checks such that some packets are omitted (from the extension negotiation message), and a client and server may consequently end up with a connection for which some security features have been downgraded or disabled, aka a Terrapin attack. This occurs because the SSH Binary Packet Protocol (BPP), implemented by these extensions, mishandles the handshake phase and mishandles use of sequence numbers. For example, there is an effective attack against SSH's use of ChaCha20-Poly1305 (and CBC with Encrypt-then-MAC). The bypass occurs in chacha20-poly1305@openssh.com and (if CBC is used) the -etm@openssh.com MAC algorithms. This also affects Maverick Synergy Java SSH API before 3.1.0-SNAPSHOT, Dropbear through 2022.83, Ssh before 5.1.1 in Erlang/OTP, PuTTY before 0.80, AsyncSSH before 2.14.2, golang.org/x/crypto before 0.17.0, libssh before 0.10.6, libssh2 through 1.11.0, Thorn Tech SFTP Gateway before 3.4.6, Tera Term before 5.1, Paramiko before 3.4.0, jsch before 0.2.15, SFTPGo before 2.5.6, Netgate pfSense Plus through 23.09.1, Netgate pfSense CE through 2.7.2, HPN-SSH through 18.2.0, ProFTPD before 1.3.8b (and before 1.3.9rc2), ORYX CycloneSSH before 2.3.4, NetSarang XShell 7 before Build 0144, CrushFTP before 10.6.0, ConnectBot SSH library before 2.2.22, Apache MINA sshd through 2.11.0, sshj through 0.37.0, TinySSH through 20230101, trilead-ssh2 6401, LANCOM LCOS and LANconfig, FileZilla before 3.66.4, Nova before 11.8, PKIX-SSH before 14.4, SecureCRT before 9.4.3, Transmit5 before 5.10.4, Win32-OpenSSH before 9.5.0.0p1-Beta, WinSCP before 6.2.2, Bitvise SSH Server before 9.32, Bitvise SSH Client before 9.33, KiTTY through 0.76.1.13, the net-ssh gem 7.2.0 for Ruby, the mscdex ssh2 module before 1.15.0 for Node.js, the thrussh library before 0.35.1 for Rust, and the Russh crate before 0.40.2 for Rust.",
-                                "markdown": "**Vulnerability CVE-2023-48795**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|MEDIUM|golang.org/x/crypto|0.17.0|[CVE-2023-48795](https://www.mend.io/vulnerability-database/CVE-2023-48795)|\n\nThe SSH transport protocol with certain OpenSSH extensions, found in OpenSSH before 9.6 and other products, allows remote attackers to bypass integrity checks such that some packets are omitted (from the extension negotiation message), and a client and server may consequently end up with a connection for which some security features have been downgraded or disabled, aka a Terrapin attack. This occurs because the SSH Binary Packet Protocol (BPP), implemented by these extensions, mishandles the handshake phase and mishandles use of sequence numbers. For example, there is an effective attack against SSH's use of ChaCha20-Poly1305 (and CBC with Encrypt-then-MAC). The bypass occurs in chacha20-poly1305@openssh.com and (if CBC is used) the -etm@openssh.com MAC algorithms. This also affects Maverick Synergy Java SSH API before 3.1.0-SNAPSHOT, Dropbear through 2022.83, Ssh before 5.1.1 in Erlang/OTP, PuTTY before 0.80, AsyncSSH before 2.14.2, golang.org/x/crypto before 0.17.0, libssh before 0.10.6, libssh2 through 1.11.0, Thorn Tech SFTP Gateway before 3.4.6, Tera Term before 5.1, Paramiko before 3.4.0, jsch before 0.2.15, SFTPGo before 2.5.6, Netgate pfSense Plus through 23.09.1, Netgate pfSense CE through 2.7.2, HPN-SSH through 18.2.0, ProFTPD before 1.3.8b (and before 1.3.9rc2), ORYX CycloneSSH before 2.3.4, NetSarang XShell 7 before Build 0144, CrushFTP before 10.6.0, ConnectBot SSH library before 2.2.22, Apache MINA sshd through 2.11.0, sshj through 0.37.0, TinySSH through 20230101, trilead-ssh2 6401, LANCOM LCOS and LANconfig, FileZilla before 3.66.4, Nova before 11.8, PKIX-SSH before 14.4, SecureCRT before 9.4.3, Transmit5 before 5.10.4, Win32-OpenSSH before 9.5.0.0p1-Beta, WinSCP before 6.2.2, Bitvise SSH Server before 9.32, Bitvise SSH Client before 9.33, KiTTY through 0.76.1.13, the net-ssh gem 7.2.0 for Ruby, the mscdex ssh2 module before 1.15.0 for Node.js, the thrussh library before 0.35.1 for Rust, and the Russh crate before 0.40.2 for Rust."
-                            },
-                            "properties": {
-                                "score": "5.9",
-                                "security-severity": "5.9",
-                                "epss": "0.69",
-                                "tags": [
-                                    "vulnerability",
-                                    "security",
-                                    "MEDIUM"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "CVE-2019-17571",
-                            "name": "LangPackageVulnerability",
-                            "shortDescription": {
-                                "text": "CVE-2019-17571"
-                            },
-                            "fullDescription": {
-                                "text": "Included in Log4j 1.2 is a SocketServer class that is vulnerable to deserialization of untrusted data which can be exploited to remotely execute arbitrary code when combined with a deserialization gadget when listening to untrusted network traffic for log data. This affects Log4j versions up to 1.2 up to 1.2.17."
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "helpUri": "https://www.mend.io/vulnerability-database/CVE-2019-17571",
-                            "help": {
-                                "text": "Vulnerability: CVE-2019-17571\nSeverity: CRITICAL\nPackage: log4j:log4j\nFixed Version: \nLink: [CVE-2019-17571](https://www.mend.io/vulnerability-database/CVE-2019-17571)\nIncluded in Log4j 1.2 is a SocketServer class that is vulnerable to deserialization of untrusted data which can be exploited to remotely execute arbitrary code when combined with a deserialization gadget when listening to untrusted network traffic for log data. This affects Log4j versions up to 1.2 up to 1.2.17.",
-                                "markdown": "**Vulnerability CVE-2019-17571**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|CRITICAL|log4j:log4j||[CVE-2019-17571](https://www.mend.io/vulnerability-database/CVE-2019-17571)|\n\nIncluded in Log4j 1.2 is a SocketServer class that is vulnerable to deserialization of untrusted data which can be exploited to remotely execute arbitrary code when combined with a deserialization gadget when listening to untrusted network traffic for log data. This affects Log4j versions up to 1.2 up to 1.2.17."
-                            },
-                            "properties": {
-                                "score": "9.8",
-                                "security-severity": "9.8",
-                                "epss": "0.79",
-                                "tags": [
-                                    "vulnerability",
-                                    "security",
-                                    "CRITICAL"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "CVE-2021-4104",
-                            "name": "LangPackageVulnerability",
-                            "shortDescription": {
-                                "text": "CVE-2021-4104"
-                            },
-                            "fullDescription": {
-                                "text": "JMSAppender in Log4j 1.2 is vulnerable to deserialization of untrusted data when the attacker has write access to the Log4j configuration. The attacker can provide TopicBindingName and TopicConnectionFactoryBindingName configurations causing JMSAppender to perform JNDI requests that result in remote code execution in a similar fashion to CVE-2021-44228. Note this issue only affects Log4j 1.2 when specifically configured to use JMSAppender, which is not the default. Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions."
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "helpUri": "https://www.mend.io/vulnerability-database/CVE-2021-4104",
-                            "help": {
-                                "text": "Vulnerability: CVE-2021-4104\nSeverity: HIGH\nPackage: log4j:log4j\nFixed Version: \nLink: [CVE-2021-4104](https://www.mend.io/vulnerability-database/CVE-2021-4104)\nJMSAppender in Log4j 1.2 is vulnerable to deserialization of untrusted data when the attacker has write access to the Log4j configuration. The attacker can provide TopicBindingName and TopicConnectionFactoryBindingName configurations causing JMSAppender to perform JNDI requests that result in remote code execution in a similar fashion to CVE-2021-44228. Note this issue only affects Log4j 1.2 when specifically configured to use JMSAppender, which is not the default. Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions.",
-                                "markdown": "**Vulnerability CVE-2021-4104**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|HIGH|log4j:log4j||[CVE-2021-4104](https://www.mend.io/vulnerability-database/CVE-2021-4104)|\n\nJMSAppender in Log4j 1.2 is vulnerable to deserialization of untrusted data when the attacker has write access to the Log4j configuration. The attacker can provide TopicBindingName and TopicConnectionFactoryBindingName configurations causing JMSAppender to perform JNDI requests that result in remote code execution in a similar fashion to CVE-2021-44228. Note this issue only affects Log4j 1.2 when specifically configured to use JMSAppender, which is not the default. Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions."
-                            },
-                            "properties": {
-                                "score": "7.5",
-                                "security-severity": "7.5",
-                                "epss": "0.13",
-                                "tags": [
-                                    "vulnerability",
-                                    "security",
-                                    "HIGH"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "CVE-2022-23302",
-                            "name": "LangPackageVulnerability",
-                            "shortDescription": {
-                                "text": "CVE-2022-23302"
-                            },
-                            "fullDescription": {
-                                "text": "JMSSink in all versions of Log4j 1.x is vulnerable to deserialization of untrusted data when the attacker has write access to the Log4j configuration or if the configuration references an LDAP service the attacker has access to. The attacker can provide a TopicConnectionFactoryBindingName configuration causing JMSSink to perform JNDI requests that result in remote code execution in a similar fashion to CVE-2021-4104. Note this issue only affects Log4j 1.x when specifically configured to use JMSSink, which is not the default. Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions."
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "helpUri": "https://www.mend.io/vulnerability-database/CVE-2022-23302",
-                            "help": {
-                                "text": "Vulnerability: CVE-2022-23302\nSeverity: HIGH\nPackage: log4j:log4j\nFixed Version: \nLink: [CVE-2022-23302](https://www.mend.io/vulnerability-database/CVE-2022-23302)\nJMSSink in all versions of Log4j 1.x is vulnerable to deserialization of untrusted data when the attacker has write access to the Log4j configuration or if the configuration references an LDAP service the attacker has access to. The attacker can provide a TopicConnectionFactoryBindingName configuration causing JMSSink to perform JNDI requests that result in remote code execution in a similar fashion to CVE-2021-4104. Note this issue only affects Log4j 1.x when specifically configured to use JMSSink, which is not the default. Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions.",
-                                "markdown": "**Vulnerability CVE-2022-23302**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|HIGH|log4j:log4j||[CVE-2022-23302](https://www.mend.io/vulnerability-database/CVE-2022-23302)|\n\nJMSSink in all versions of Log4j 1.x is vulnerable to deserialization of untrusted data when the attacker has write access to the Log4j configuration or if the configuration references an LDAP service the attacker has access to. The attacker can provide a TopicConnectionFactoryBindingName configuration causing JMSSink to perform JNDI requests that result in remote code execution in a similar fashion to CVE-2021-4104. Note this issue only affects Log4j 1.x when specifically configured to use JMSSink, which is not the default. Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions."
-                            },
-                            "properties": {
-                                "score": "8.8",
-                                "security-severity": "8.8",
-                                "epss": "0.01",
-                                "tags": [
-                                    "vulnerability",
-                                    "security",
-                                    "HIGH"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "CVE-2022-23305",
-                            "name": "LangPackageVulnerability",
-                            "shortDescription": {
-                                "text": "CVE-2022-23305"
-                            },
-                            "fullDescription": {
-                                "text": "By design, the JDBCAppender in Log4j 1.2.x accepts an SQL statement as a configuration parameter where the values to be inserted are converters from PatternLayout. The message converter, %m, is likely to always be included. This allows attackers to manipulate the SQL by entering crafted strings into input fields or headers of an application that are logged allowing unintended SQL queries to be executed. Note this issue only affects Log4j 1.x when specifically configured to use the JDBCAppender, which is not the default. Beginning in version 2.0-beta8, the JDBCAppender was re-introduced with proper support for parameterized SQL queries and further customization over the columns written to in logs. Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions."
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "helpUri": "https://www.mend.io/vulnerability-database/CVE-2022-23305",
-                            "help": {
-                                "text": "Vulnerability: CVE-2022-23305\nSeverity: CRITICAL\nPackage: log4j:log4j\nFixed Version: \nLink: [CVE-2022-23305](https://www.mend.io/vulnerability-database/CVE-2022-23305)\nBy design, the JDBCAppender in Log4j 1.2.x accepts an SQL statement as a configuration parameter where the values to be inserted are converters from PatternLayout. The message converter, %m, is likely to always be included. This allows attackers to manipulate the SQL by entering crafted strings into input fields or headers of an application that are logged allowing unintended SQL queries to be executed. Note this issue only affects Log4j 1.x when specifically configured to use the JDBCAppender, which is not the default. Beginning in version 2.0-beta8, the JDBCAppender was re-introduced with proper support for parameterized SQL queries and further customization over the columns written to in logs. Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions.",
-                                "markdown": "**Vulnerability CVE-2022-23305**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|CRITICAL|log4j:log4j||[CVE-2022-23305](https://www.mend.io/vulnerability-database/CVE-2022-23305)|\n\nBy design, the JDBCAppender in Log4j 1.2.x accepts an SQL statement as a configuration parameter where the values to be inserted are converters from PatternLayout. The message converter, %m, is likely to always be included. This allows attackers to manipulate the SQL by entering crafted strings into input fields or headers of an application that are logged allowing unintended SQL queries to be executed. Note this issue only affects Log4j 1.x when specifically configured to use the JDBCAppender, which is not the default. Beginning in version 2.0-beta8, the JDBCAppender was re-introduced with proper support for parameterized SQL queries and further customization over the columns written to in logs. Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions."
-                            },
-                            "properties": {
-                                "score": "9.8",
-                                "security-severity": "9.8",
-                                "epss": "0",
-                                "tags": [
-                                    "vulnerability",
-                                    "security",
-                                    "CRITICAL"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "CVE-2022-23307",
-                            "name": "LangPackageVulnerability",
-                            "shortDescription": {
-                                "text": "CVE-2022-23307"
-                            },
-                            "fullDescription": {
-                                "text": "CVE-2020-9493 identified a deserialization issue that was present in Apache Chainsaw. Prior to Chainsaw V2.0 Chainsaw was a component of Apache Log4j 1.2.x where the same issue exists."
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "helpUri": "https://www.mend.io/vulnerability-database/CVE-2022-23307",
-                            "help": {
-                                "text": "Vulnerability: CVE-2022-23307\nSeverity: HIGH\nPackage: log4j:log4j\nFixed Version: \nLink: [CVE-2022-23307](https://www.mend.io/vulnerability-database/CVE-2022-23307)\nCVE-2020-9493 identified a deserialization issue that was present in Apache Chainsaw. Prior to Chainsaw V2.0 Chainsaw was a component of Apache Log4j 1.2.x where the same issue exists.",
-                                "markdown": "**Vulnerability CVE-2022-23307**\n| Severity | Package | Fixed Version | Link |\n| --- | --- | --- | --- |\n|HIGH|log4j:log4j||[CVE-2022-23307](https://www.mend.io/vulnerability-database/CVE-2022-23307)|\n\nCVE-2020-9493 identified a deserialization issue that was present in Apache Chainsaw. Prior to Chainsaw V2.0 Chainsaw was a component of Apache Log4j 1.2.x where the same issue exists."
-                            },
-                            "properties": {
-                                "score": "8.8",
-                                "security-severity": "8.8",
-                                "epss": "0.01",
-                                "tags": [
-                                    "vulnerability",
-                                    "security",
-                                    "HIGH"
+                                    "LOW"
                                 ]
                             }
                         },
@@ -248,7 +52,6 @@
                             },
                             "properties": {
                                 "score": "3",
-                                "security-severity": "",
                                 "epss": "",
                                 "tags": [
                                     "license",
@@ -258,117 +61,20 @@
                             }
                         },
                         {
-                            "id": "Golang BSD + Patents",
+                            "id": "BSD-2-Clause",
                             "name": "license_finding",
                             "shortDescription": {
-                                "text": "Golang BSD + Patents"
+                                "text": "BSD-2-Clause"
                             },
                             "defaultConfiguration": {
                                 "level": "error"
                             },
                             "help": {
-                                "text": "License: Golang BSD + Patents\nSeverity: UNKNOWN\n",
-                                "markdown": "License | Severity |\n| --- | --- |\n|Golang BSD + Patents|UNKNOWN|"
-                            },
-                            "properties": {
-                                "score": "0",
-                                "security-severity": "",
-                                "epss": "",
-                                "tags": [
-                                    "license",
-                                    "security",
-                                    "UNKNOWN"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "GPL-2.0+",
-                            "name": "license_finding",
-                            "shortDescription": {
-                                "text": "GPL-2.0+"
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "help": {
-                                "text": "License: GPL-2.0+\nSeverity: HIGH\n",
-                                "markdown": "License | Severity |\n| --- | --- |\n|GPL-2.0+|HIGH|"
-                            },
-                            "properties": {
-                                "score": "3",
-                                "security-severity": "",
-                                "epss": "",
-                                "tags": [
-                                    "license",
-                                    "security",
-                                    "HIGH"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "Public Domain",
-                            "name": "license_finding",
-                            "shortDescription": {
-                                "text": "Public Domain"
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "help": {
-                                "text": "License: Public Domain\nSeverity: LOW\n",
-                                "markdown": "License | Severity |\n| --- | --- |\n|Public Domain|LOW|"
+                                "text": "License: BSD-2-Clause\nSeverity: LOW\n",
+                                "markdown": "License | Severity |\n| --- | --- |\n|BSD-2-Clause|LOW|"
                             },
                             "properties": {
                                 "score": "1",
-                                "security-severity": "",
-                                "epss": "",
-                                "tags": [
-                                    "license",
-                                    "security",
-                                    "LOW"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "LGPL-2.1-or-later",
-                            "name": "license_finding",
-                            "shortDescription": {
-                                "text": "LGPL-2.1-or-later"
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "help": {
-                                "text": "License: LGPL-2.1-or-later\nSeverity: UNKNOWN\n",
-                                "markdown": "License | Severity |\n| --- | --- |\n|LGPL-2.1-or-later|UNKNOWN|"
-                            },
-                            "properties": {
-                                "score": "0",
-                                "security-severity": "",
-                                "epss": "",
-                                "tags": [
-                                    "license",
-                                    "security",
-                                    "UNKNOWN"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "PHP-3.01",
-                            "name": "license_finding",
-                            "shortDescription": {
-                                "text": "PHP-3.01"
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "help": {
-                                "text": "License: PHP-3.01\nSeverity: LOW\n",
-                                "markdown": "License | Severity |\n| --- | --- |\n|PHP-3.01|LOW|"
-                            },
-                            "properties": {
-                                "score": "1",
-                                "security-severity": "",
                                 "epss": "",
                                 "tags": [
                                     "license",
@@ -392,36 +98,11 @@
                             },
                             "properties": {
                                 "score": "1",
-                                "security-severity": "",
                                 "epss": "",
                                 "tags": [
                                     "license",
                                     "security",
                                     "LOW"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "LGPL-2.0-or-later",
-                            "name": "license_finding",
-                            "shortDescription": {
-                                "text": "LGPL-2.0-or-later"
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "help": {
-                                "text": "License: LGPL-2.0-or-later\nSeverity: UNKNOWN\n",
-                                "markdown": "License | Severity |\n| --- | --- |\n|LGPL-2.0-or-later|UNKNOWN|"
-                            },
-                            "properties": {
-                                "score": "0",
-                                "security-severity": "",
-                                "epss": "",
-                                "tags": [
-                                    "license",
-                                    "security",
-                                    "UNKNOWN"
                                 ]
                             }
                         },
@@ -440,55 +121,6 @@
                             },
                             "properties": {
                                 "score": "1",
-                                "security-severity": "",
-                                "epss": "",
-                                "tags": [
-                                    "license",
-                                    "security",
-                                    "LOW"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "Zend-2.0",
-                            "name": "license_finding",
-                            "shortDescription": {
-                                "text": "Zend-2.0"
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "help": {
-                                "text": "License: Zend-2.0\nSeverity: LOW\n",
-                                "markdown": "License | Severity |\n| --- | --- |\n|Zend-2.0|LOW|"
-                            },
-                            "properties": {
-                                "score": "1",
-                                "security-severity": "",
-                                "epss": "",
-                                "tags": [
-                                    "license",
-                                    "security",
-                                    "LOW"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "BSD-2-Clause",
-                            "name": "license_finding",
-                            "shortDescription": {
-                                "text": "BSD-2-Clause"
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "help": {
-                                "text": "License: BSD-2-Clause\nSeverity: LOW\n",
-                                "markdown": "License | Severity |\n| --- | --- |\n|BSD-2-Clause|LOW|"
-                            },
-                            "properties": {
-                                "score": "1",
-                                "security-severity": "",
                                 "epss": "",
                                 "tags": [
                                     "license",
@@ -512,55 +144,6 @@
                             },
                             "properties": {
                                 "score": "1",
-                                "security-severity": "",
-                                "epss": "",
-                                "tags": [
-                                    "license",
-                                    "security",
-                                    "LOW"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "CC0-1.0",
-                            "name": "license_finding",
-                            "shortDescription": {
-                                "text": "CC0-1.0"
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "help": {
-                                "text": "License: CC0-1.0\nSeverity: LOW\n",
-                                "markdown": "License | Severity |\n| --- | --- |\n|CC0-1.0|LOW|"
-                            },
-                            "properties": {
-                                "score": "1",
-                                "security-severity": "",
-                                "epss": "",
-                                "tags": [
-                                    "license",
-                                    "security",
-                                    "LOW"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "BSD",
-                            "name": "license_finding",
-                            "shortDescription": {
-                                "text": "BSD"
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "help": {
-                                "text": "License: BSD\nSeverity: LOW\n",
-                                "markdown": "License | Severity |\n| --- | --- |\n|BSD|LOW|"
-                            },
-                            "properties": {
-                                "score": "1",
-                                "security-severity": "",
                                 "epss": "",
                                 "tags": [
                                     "license",
@@ -584,12 +167,34 @@
                             },
                             "properties": {
                                 "score": "1",
-                                "security-severity": "",
                                 "epss": "",
                                 "tags": [
                                     "license",
                                     "security",
                                     "LOW"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "GPL-2.0+",
+                            "name": "license_finding",
+                            "shortDescription": {
+                                "text": "GPL-2.0+"
+                            },
+                            "defaultConfiguration": {
+                                "level": "error"
+                            },
+                            "help": {
+                                "text": "License: GPL-2.0+\nSeverity: HIGH\n",
+                                "markdown": "License | Severity |\n| --- | --- |\n|GPL-2.0+|HIGH|"
+                            },
+                            "properties": {
+                                "score": "3",
+                                "epss": "",
+                                "tags": [
+                                    "license",
+                                    "security",
+                                    "HIGH"
                                 ]
                             }
                         },
@@ -608,7 +213,6 @@
                             },
                             "properties": {
                                 "score": "2",
-                                "security-severity": "",
                                 "epss": "",
                                 "tags": [
                                     "license",
@@ -616,243 +220,58 @@
                                     "MEDIUM"
                                 ]
                             }
-                        },
-                        {
-                            "id": "ISC",
-                            "name": "license_finding",
-                            "shortDescription": {
-                                "text": "ISC"
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "help": {
-                                "text": "License: ISC\nSeverity: LOW\n",
-                                "markdown": "License | Severity |\n| --- | --- |\n|ISC|LOW|"
-                            },
-                            "properties": {
-                                "score": "1",
-                                "security-severity": "",
-                                "epss": "",
-                                "tags": [
-                                    "license",
-                                    "security",
-                                    "LOW"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "0BSD",
-                            "name": "license_finding",
-                            "shortDescription": {
-                                "text": "0BSD"
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "help": {
-                                "text": "License: 0BSD\nSeverity: LOW\n",
-                                "markdown": "License | Severity |\n| --- | --- |\n|0BSD|LOW|"
-                            },
-                            "properties": {
-                                "score": "1",
-                                "security-severity": "",
-                                "epss": "",
-                                "tags": [
-                                    "license",
-                                    "security",
-                                    "LOW"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "OpenSSL",
-                            "name": "license_finding",
-                            "shortDescription": {
-                                "text": "OpenSSL"
-                            },
-                            "defaultConfiguration": {
-                                "level": "error"
-                            },
-                            "help": {
-                                "text": "License: OpenSSL\nSeverity: LOW\n",
-                                "markdown": "License | Severity |\n| --- | --- |\n|OpenSSL|LOW|"
-                            },
-                            "properties": {
-                                "score": "1",
-                                "security-severity": "",
-                                "epss": "",
-                                "tags": [
-                                    "license",
-                                    "security",
-                                    "LOW"
-                                ]
-                            }
                         }
                     ],
-                    "version": "1.0.0"
+                    "version": "24.3.2-1"
                 }
             },
             "results": [
                 {
-                    "ruleId": "CVE-2023-39325",
+                    "ruleId": "CVE-2024-2511",
                     "ruleIndex": 0,
                     "level": "error",
                     "message": {
-                        "text": "Package: golang.org/x/net\nInstalled Version: 0.14.0\nVulnerability CVE-2023-39325\nSeverity: HIGH\nFixed Version: 0.17.0\nLink: [CVE-2023-39325](https://www.mend.io/vulnerability-database/CVE-2023-39325)"
+                        "text": "Package: libcrypto3\nInstalled Version: 3.1.4-r5\nVulnerability CVE-2024-2511\nSeverity: LOW\nFixed Version: 3.1.4-r6\nLink: [CVE-2024-2511](https://www.mend.io/vulnerability-database/CVE-2024-2511)"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "GO",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
+                                    "uri": "alpine"
                                 }
                             }
                         }
                     ]
                 },
                 {
-                    "ruleId": "CVE-2023-44487",
+                    "ruleId": "CVE-2024-2511",
+                    "ruleIndex": 0,
+                    "level": "error",
+                    "message": {
+                        "text": "Package: libssl3\nInstalled Version: 3.1.4-r5\nVulnerability CVE-2024-2511\nSeverity: LOW\nFixed Version: 3.1.4-r6\nLink: [CVE-2024-2511](https://www.mend.io/vulnerability-database/CVE-2024-2511)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "alpine"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "GPL-2.0",
                     "ruleIndex": 1,
                     "level": "error",
                     "message": {
-                        "text": "Package: golang.org/x/net\nInstalled Version: 0.14.0\nVulnerability CVE-2023-44487\nSeverity: HIGH\nFixed Version: 0.17.0\nLink: [CVE-2023-44487](https://www.mend.io/vulnerability-database/CVE-2023-44487)"
+                        "text": "Package: busybox\nLicense: GPL-2.0\nSeverity: HIGH\n"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "GO",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "CVE-2023-48795",
-                    "ruleIndex": 2,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: golang.org/x/crypto\nInstalled Version: 0.12.0\nVulnerability CVE-2023-48795\nSeverity: MEDIUM\nFixed Version: 0.17.0\nLink: [CVE-2023-48795](https://www.mend.io/vulnerability-database/CVE-2023-48795)"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "GO",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "CVE-2019-17571",
-                    "ruleIndex": 3,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: log4j:log4j\nInstalled Version: 1.2.9\nVulnerability CVE-2019-17571\nSeverity: CRITICAL\nFixed Version: \nLink: [CVE-2019-17571](https://www.mend.io/vulnerability-database/CVE-2019-17571)"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "MAVEN",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "CVE-2021-4104",
-                    "ruleIndex": 4,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: log4j:log4j\nInstalled Version: 1.2.9\nVulnerability CVE-2021-4104\nSeverity: HIGH\nFixed Version: \nLink: [CVE-2021-4104](https://www.mend.io/vulnerability-database/CVE-2021-4104)"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "MAVEN",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "CVE-2022-23302",
-                    "ruleIndex": 5,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: log4j:log4j\nInstalled Version: 1.2.9\nVulnerability CVE-2022-23302\nSeverity: HIGH\nFixed Version: \nLink: [CVE-2022-23302](https://www.mend.io/vulnerability-database/CVE-2022-23302)"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "MAVEN",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "CVE-2022-23305",
-                    "ruleIndex": 6,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: log4j:log4j\nInstalled Version: 1.2.9\nVulnerability CVE-2022-23305\nSeverity: CRITICAL\nFixed Version: \nLink: [CVE-2022-23305](https://www.mend.io/vulnerability-database/CVE-2022-23305)"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "MAVEN",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "CVE-2022-23307",
-                    "ruleIndex": 7,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: log4j:log4j\nInstalled Version: 1.2.9\nVulnerability CVE-2022-23307\nSeverity: HIGH\nFixed Version: \nLink: [CVE-2022-23307](https://www.mend.io/vulnerability-database/CVE-2022-23307)"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "MAVEN",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -864,268 +283,16 @@
                 },
                 {
                     "ruleId": "GPL-2.0",
-                    "ruleIndex": 8,
+                    "ruleIndex": 1,
                     "level": "error",
                     "message": {
-                        "text": "Package: busybox\nLicense: GPL-2.0\nSeverity: HIGH\n"
+                        "text": "Package: apk-tools\nLicense: GPL-2.0\nSeverity: HIGH\n"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "Golang BSD + Patents",
-                    "ruleIndex": 9,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: golang.org/x/sys\nLicense: Golang BSD + Patents\nSeverity: UNKNOWN\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "GPL-2.0+",
-                    "ruleIndex": 10,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: xz-libs\nLicense: GPL-2.0+\nSeverity: HIGH\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "Public Domain",
-                    "ruleIndex": 11,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: xz-libs\nLicense: Public Domain\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "LGPL-2.1-or-later",
-                    "ruleIndex": 12,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: xz-libs\nLicense: LGPL-2.1-or-later\nSeverity: UNKNOWN\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "PHP-3.01",
-                    "ruleIndex": 13,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8\nLicense: PHP-3.01\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "BSD-3-Clause",
-                    "ruleIndex": 14,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8\nLicense: BSD-3-Clause\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "LGPL-2.0-or-later",
-                    "ruleIndex": 15,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8\nLicense: LGPL-2.0-or-later\nSeverity: UNKNOWN\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "Zend-2.0",
-                    "ruleIndex": 17,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8\nLicense: Zend-2.0\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: ncurses-terminfo-base\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "Golang BSD + Patents",
-                    "ruleIndex": 9,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: golang.org/x/crypto\nLicense: Golang BSD + Patents\nSeverity: UNKNOWN\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: github.com/valyala/bytebufferpool\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -1137,7 +304,7 @@
                 },
                 {
                     "ruleId": "BSD-2-Clause",
-                    "ruleIndex": 18,
+                    "ruleIndex": 2,
                     "level": "error",
                     "message": {
                         "text": "Package: libc-utils\nLicense: BSD-2-Clause\nSeverity: LOW\n"
@@ -1146,7 +313,7 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -1158,7 +325,7 @@
                 },
                 {
                     "ruleId": "BSD-3-Clause",
-                    "ruleIndex": 14,
+                    "ruleIndex": 3,
                     "level": "error",
                     "message": {
                         "text": "Package: libc-utils\nLicense: BSD-3-Clause\nSeverity: LOW\n"
@@ -1167,91 +334,7 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "Apache-2.0",
-                    "ruleIndex": 19,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: argon2-libs\nLicense: Apache-2.0\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "CC0-1.0",
-                    "ruleIndex": 20,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: argon2-libs\nLicense: CC0-1.0\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "BSD-3-Clause",
-                    "ruleIndex": 14,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: pcre2\nLicense: BSD-3-Clause\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "Apache-2.0",
-                    "ruleIndex": 19,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: extprim\nLicense: Apache-2.0\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -1263,247 +346,16 @@
                 },
                 {
                     "ruleId": "MIT",
-                    "ruleIndex": 16,
+                    "ruleIndex": 4,
                     "level": "error",
                     "message": {
-                        "text": "Package: extprim\nLicense: MIT\nSeverity: LOW\n"
+                        "text": "Package: alpine-keys\nLicense: MIT\nSeverity: LOW\n"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: github.com/labstack/gommon\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: musl-utils\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "BSD",
-                    "ruleIndex": 21,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: musl-utils\nLicense: BSD\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "GPL-2.0+",
-                    "ruleIndex": 10,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: musl-utils\nLicense: GPL-2.0+\nSeverity: HIGH\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "PHP-3.01",
-                    "ruleIndex": 13,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-mysqlnd\nLicense: PHP-3.01\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "BSD-3-Clause",
-                    "ruleIndex": 14,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-mysqlnd\nLicense: BSD-3-Clause\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "LGPL-2.0-or-later",
-                    "ruleIndex": 15,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-mysqlnd\nLicense: LGPL-2.0-or-later\nSeverity: UNKNOWN\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-mysqlnd\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "Zend-2.0",
-                    "ruleIndex": 17,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-mysqlnd\nLicense: Zend-2.0\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "Golang BSD + Patents",
-                    "ruleIndex": 9,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: golang.org/x/net\nLicense: Golang BSD + Patents\nSeverity: UNKNOWN\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: github.com/valyala/fasttemplate\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -1515,7 +367,7 @@
                 },
                 {
                     "ruleId": "GPL-2.0",
-                    "ruleIndex": 8,
+                    "ruleIndex": 1,
                     "level": "error",
                     "message": {
                         "text": "Package: alpine-baselayout\nLicense: GPL-2.0\nSeverity: HIGH\n"
@@ -1524,70 +376,7 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "PHP-3.01",
-                    "ruleIndex": 13,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-common\nLicense: PHP-3.01\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "BSD-3-Clause",
-                    "ruleIndex": 14,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-common\nLicense: BSD-3-Clause\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "LGPL-2.0-or-later",
-                    "ruleIndex": 15,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-common\nLicense: LGPL-2.0-or-later\nSeverity: UNKNOWN\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -1599,16 +388,16 @@
                 },
                 {
                     "ruleId": "MIT",
-                    "ruleIndex": 16,
+                    "ruleIndex": 4,
                     "level": "error",
                     "message": {
-                        "text": "Package: php8-common\nLicense: MIT\nSeverity: LOW\n"
+                        "text": "Package: musl\nLicense: MIT\nSeverity: LOW\n"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -1619,17 +408,17 @@
                     ]
                 },
                 {
-                    "ruleId": "Zend-2.0",
-                    "ruleIndex": 17,
+                    "ruleId": "GPL-2.0",
+                    "ruleIndex": 1,
                     "level": "error",
                     "message": {
-                        "text": "Package: php8-common\nLicense: Zend-2.0\nSeverity: LOW\n"
+                        "text": "Package: scanelf\nLicense: GPL-2.0\nSeverity: HIGH\n"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -1640,17 +429,17 @@
                     ]
                 },
                 {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
+                    "ruleId": "GPL-2.0",
+                    "ruleIndex": 1,
                     "level": "error",
                     "message": {
-                        "text": "Package: axios\nLicense: MIT\nSeverity: LOW\n"
+                        "text": "Package: busybox-binsh\nLicense: GPL-2.0\nSeverity: HIGH\n"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -1661,17 +450,17 @@
                     ]
                 },
                 {
-                    "ruleId": "BSD-3-Clause",
-                    "ruleIndex": 14,
+                    "ruleId": "Apache-2.0",
+                    "ruleIndex": 5,
                     "level": "error",
                     "message": {
-                        "text": "Package: libedit\nLicense: BSD-3-Clause\nSeverity: LOW\n"
+                        "text": "Package: libcrypto3\nLicense: Apache-2.0\nSeverity: LOW\n"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -1683,7 +472,7 @@
                 },
                 {
                     "ruleId": "Zlib",
-                    "ruleIndex": 22,
+                    "ruleIndex": 6,
                     "level": "error",
                     "message": {
                         "text": "Package: zlib\nLicense: Zlib\nSeverity: LOW\n"
@@ -1692,7 +481,7 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -1704,16 +493,79 @@
                 },
                 {
                     "ruleId": "MIT",
-                    "ruleIndex": 16,
+                    "ruleIndex": 4,
                     "level": "error",
                     "message": {
-                        "text": "Package: ncurses-libs\nLicense: MIT\nSeverity: LOW\n"
+                        "text": "Package: musl-utils\nLicense: MIT\nSeverity: LOW\n"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
+                                    "uriBaseId": "ROOTPATH"
+                                },
+                                "region": {
+                                    "startLine": 1
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "BSD-2-Clause",
+                    "ruleIndex": 2,
+                    "level": "error",
+                    "message": {
+                        "text": "Package: musl-utils\nLicense: BSD-2-Clause\nSeverity: LOW\n"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "alpine",
+                                    "uriBaseId": "ROOTPATH"
+                                },
+                                "region": {
+                                    "startLine": 1
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "GPL-2.0+",
+                    "ruleIndex": 7,
+                    "level": "error",
+                    "message": {
+                        "text": "Package: musl-utils\nLicense: GPL-2.0+\nSeverity: HIGH\n"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "alpine",
+                                    "uriBaseId": "ROOTPATH"
+                                },
+                                "region": {
+                                    "startLine": 1
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "GPL-2.0",
+                    "ruleIndex": 1,
+                    "level": "error",
+                    "message": {
+                        "text": "Package: ssl_client\nLicense: GPL-2.0\nSeverity: HIGH\n"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -1725,7 +577,7 @@
                 },
                 {
                     "ruleId": "MPL-2.0",
-                    "ruleIndex": 23,
+                    "ruleIndex": 8,
                     "level": "error",
                     "message": {
                         "text": "Package: ca-certificates-bundle\nLicense: MPL-2.0\nSeverity: MEDIUM\n"
@@ -1734,7 +586,7 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -1746,7 +598,7 @@
                 },
                 {
                     "ruleId": "MIT",
-                    "ruleIndex": 16,
+                    "ruleIndex": 4,
                     "level": "error",
                     "message": {
                         "text": "Package: ca-certificates-bundle\nLicense: MIT\nSeverity: LOW\n"
@@ -1755,511 +607,7 @@
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: github.com/mattn/go-isatty\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: github.com/mattn/go-colorable\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: alpine-keys\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: musl\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: libxml2\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "ISC",
-                    "ruleIndex": 24,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: libretls\nLicense: ISC\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "BSD-3-Clause",
-                    "ruleIndex": 14,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: libretls\nLicense: BSD-3-Clause\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: libretls\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "0BSD",
-                    "ruleIndex": 25,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: linkmanager\nLicense: 0BSD\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: github.com/labstack/echo/v4\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "Golang BSD + Patents",
-                    "ruleIndex": 9,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: golang.org/x/text\nLicense: Golang BSD + Patents\nSeverity: UNKNOWN\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "GPL-2.0",
-                    "ruleIndex": 8,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: scanelf\nLicense: GPL-2.0\nSeverity: HIGH\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "PHP-3.01",
-                    "ruleIndex": 13,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-mysqli\nLicense: PHP-3.01\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "BSD-3-Clause",
-                    "ruleIndex": 14,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-mysqli\nLicense: BSD-3-Clause\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "LGPL-2.0-or-later",
-                    "ruleIndex": 15,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-mysqli\nLicense: LGPL-2.0-or-later\nSeverity: UNKNOWN\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-mysqli\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "Zend-2.0",
-                    "ruleIndex": 17,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-mysqli\nLicense: Zend-2.0\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "PHP-3.01",
-                    "ruleIndex": 13,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-openssl\nLicense: PHP-3.01\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "BSD-3-Clause",
-                    "ruleIndex": 14,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-openssl\nLicense: BSD-3-Clause\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "LGPL-2.0-or-later",
-                    "ruleIndex": 15,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-openssl\nLicense: LGPL-2.0-or-later\nSeverity: UNKNOWN\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "MIT",
-                    "ruleIndex": 16,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-openssl\nLicense: MIT\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "Zend-2.0",
-                    "ruleIndex": 17,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: php8-openssl\nLicense: Zend-2.0\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "OpenSSL",
-                    "ruleIndex": 26,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: libcrypto1.1\nLicense: OpenSSL\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "GPL-2.0",
-                    "ruleIndex": 8,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: apk-tools\nLicense: GPL-2.0\nSeverity: HIGH\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -2271,37 +619,16 @@
                 },
                 {
                     "ruleId": "Apache-2.0",
-                    "ruleIndex": 19,
+                    "ruleIndex": 5,
                     "level": "error",
                     "message": {
-                        "text": "Package: log4j:log4j\nLicense: Apache-2.0\nSeverity: LOW\n"
+                        "text": "Package: libssl3\nLicense: Apache-2.0\nSeverity: LOW\n"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
-                                    "uriBaseId": "ROOTPATH"
-                                },
-                                "region": {
-                                    "startLine": 1
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ruleId": "OpenSSL",
-                    "ruleIndex": 26,
-                    "level": "error",
-                    "message": {
-                        "text": "Package: libssl1.1\nLicense: OpenSSL\nSeverity: LOW\n"
-                    },
-                    "locations": [
-                        {
-                            "physicalLocation": {
-                                "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
@@ -2313,16 +640,16 @@
                 },
                 {
                     "ruleId": "GPL-2.0",
-                    "ruleIndex": 8,
+                    "ruleIndex": 1,
                     "level": "error",
                     "message": {
-                        "text": "Package: ssl_client\nLicense: GPL-2.0\nSeverity: HIGH\n"
+                        "text": "Package: alpine-baselayout-data\nLicense: GPL-2.0\nSeverity: HIGH\n"
                     },
                     "locations": [
                         {
                             "physicalLocation": {
                                 "artifactLocation": {
-                                    "uri": "public.ecr.aws/s3t2w7z5/cn-compliance",
+                                    "uri": "alpine",
                                     "uriBaseId": "ROOTPATH"
                                 },
                                 "region": {
