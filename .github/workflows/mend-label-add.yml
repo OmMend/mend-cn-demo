@@ -19,5 +19,4 @@ jobs:
 
       - name: Add labels
         run: |
-          find . -type f -name "Dockerfile" -exec sed -i '/^LABEL org.opencontainers.image.source=/!s/^LABEL /LABEL org.opencontainers.image.source=https:\/\/github.com\/your_username\/your_repository /' {} +
-          find . -type f -name "Dockerfile" -exec sed -i '/^LABEL io.mend.image.dockerfile.path=/!s/^LABEL /LABEL io.mend.image.dockerfile.path=$(dirname {})/' {} +
+          find . -type f -name "Dockerfile" -exec sed -i '/^LABEL org.opencontainers.image.source=/!s/^LABEL /LABEL org.opencontainers.image.source=https:\/\/github.com\/your_username\/your_repository /; /^LABEL io.mend.image.dockerfile.path=/!s/^LABEL /LABEL io.mend.image.dockerfile.path=$(dirname {})/' {} +
