@@ -1,9 +1,6 @@
 name: Add Mend custopm Docker Labels
 
 on:
-  push:
-    paths:
-      - '**/Dockerfile'
   workflow_dispatch:
 
 jobs:
@@ -11,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Check if lables exist
         run: |
@@ -55,4 +52,15 @@ jobs:
           else
               echo "All Dockerfiles contain the specified labels."
           fi
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Add labels to Dockerfile
+          title: '[AUTO] Update Dockerfile Labels'
+          body: 'This PR automatically adds labels to the Dockerfile.'
+          branch: 'feature/update-dockerfile-labels'
+          branch-suffix: timestamp
+          delete-branch: true
 
