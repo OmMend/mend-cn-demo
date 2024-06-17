@@ -27,7 +27,7 @@ jobs:
                     echo -e "without: $without_labels"
                     echo -e "without2: $without_labels"
                 fi
-          done < <(echo -e "$without_labels")
+          done <<(echo -e "$without_labels")
   
           echo "without3: $(without_labels)"
           # Output results
