@@ -14,8 +14,10 @@ jobs:
         run: |
         
           # Initialize variables to hold files with and without labels
-          let with_labels=""
-          let without_labels=""
+          let with_labels
+          let without_labels
+          with_labels=""
+          without_labels=""
           
           # Find all files that contain 'Dockerfile' in their names
           find . -type f -name "*Dockerfile*" -print0 | while IFS= read -r -d $'\0' file; do
