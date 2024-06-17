@@ -24,9 +24,11 @@ jobs:
               else
                   without_labels+="$file\n"
                   echo -e "without: $without_labels"
+                  echo -e "without: $without_labels"
               fi
           done
-          
+
+          echo -e "without: $without_labels"
           # Output results
           if [ -n "$with_labels" ]; then
               echo "Labels already exist in:"
@@ -35,7 +37,7 @@ jobs:
               echo "No files with specified labels found."
           fi
 
-          echo -e "labels assignment to: $without_labels"
+          echo -e "without: $without_labels"
           if [ -n "$without_labels" ]; then
               echo "Files without the specified labels:"
               echo -e "$without_labels"
