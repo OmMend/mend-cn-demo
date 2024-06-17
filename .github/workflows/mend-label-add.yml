@@ -1,4 +1,4 @@
-name: Add Mend custopm Docker Labels
+name: Add Mend custom Docker Labels
 
 on:
   workflow_dispatch:
@@ -10,12 +10,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check if lables exist
+      - name: Check if lables exist & Assign Mend Labels
         run: |
         
           # Initialize variables to hold files with and without labels
-          with_labels=""
-          without_labels=""
+          let with_labels=""
+          let without_labels=""
           
           # Find all files that contain 'Dockerfile' in their names
           find . -type f -name "*Dockerfile*" -print0 | while IFS= read -r -d $'\0' file; do
@@ -24,8 +24,8 @@ jobs:
                     with_labels+="$file\n"
                 else
                     without_labels+="$file\n"
-                    echo "without: $without_labels"
-                    echo "without2: $without_labels"
+                    echo -e "without: $without_labels"
+                    echo -e "without2: $without_labels"
                 fi
           done
   
@@ -46,7 +46,7 @@ jobs:
               # Loop through each file without labels and add labels
               echo -e "$without_labels" | while IFS= read -r file; do
                   if [[ -n "$file" ]]; then
-          			      echo "LABEL org.opencontainers.image.source=https://github.com/${{ github.repository }}/tree/main" >> "$file"
+                      echo "LABEL org.opencontainers.image.source=https://github.com/${{ github.repository }}/tree/main" >> "$file"
                       echo "LABEL io.mend.image.dockerfile.path=\"$file\"" >> "$file"
                       
                       echo "Added labels to $file"
