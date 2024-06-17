@@ -12,23 +12,24 @@ jobs:
 
       - name: Check if lables exist
         run: |
+        
           # Initialize variables to hold files with and without labels
           with_labels=""
           without_labels=""
           
           # Find all files that contain 'Dockerfile' in their names
           find . -type f -name "*Dockerfile*" -print0 | while IFS= read -r -d $'\0' file; do
-              # Check each file for the specified labels
-              if grep -qE '^LABEL (org.opencontainers.image.source=|io.mend.image.dockerfile.path=)' "$file"; then
-                  with_labels+="$file\n"
-              else
-                  without_labels+="$file\n"
-                  echo -e "without: $without_labels"
-                  echo -e "without: $without_labels"
-              fi
+                # Check each file for the specified labels
+                if grep -qE '^LABEL (org.opencontainers.image.source=|io.mend.image.dockerfile.path=)' "$file"; then
+                    with_labels+="$file\n"
+                else
+                    without_labels+="$file\n"
+                    echo -e "without: $without_labels"
+                    echo -e "without2: $without_labels"
+                fi
           done
-
-          echo -e "without: $without_labels"
+  
+          echo -e "without3: $without_labels"
           # Output results
           if [ -n "$with_labels" ]; then
               echo "Labels already exist in:"
@@ -37,7 +38,7 @@ jobs:
               echo "No files with specified labels found."
           fi
 
-          echo -e "without: $without_labels"
+          echo -e "without4: $without_labels"
           if [ -n "$without_labels" ]; then
               echo "Files without the specified labels:"
               echo -e "$without_labels"
