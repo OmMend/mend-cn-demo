@@ -21,14 +21,13 @@ jobs:
               # Check each file for the specified labels
               if grep -qE '^LABEL (org.opencontainers.image.source=|io.mend.image.dockerfile.path=)' "$file"; then
                   with_labels+="$file\n"
-                  echo -e "$without_labels"
+                  echo -e "with: $with_labels"
               else
                   without_labels+="$file\n"
-                  echo -e "$without_labels"
+                  echo -e "without: $without_labels"
               fi
           done
           
-          echo "output results"
           # Output results
           if [ -n "$with_labels" ]; then
               echo "Labels already exist in:"
@@ -37,11 +36,10 @@ jobs:
               echo "No files with specified labels found."
           fi
 
-          echo "labels assign"
+          echo "labels assignment to: $without_labels"
           if [ -n "$without_labels" ]; then
               echo "Files without the specified labels:"
               echo -e "$without_labels"
-              
               
               # Loop through each file without labels and add labels
               echo -e "$without_labels" | while IFS= read -r file; do
