@@ -17,7 +17,7 @@ jobs:
               if ! grep -qE '^LABEL (org.opencontainers.image.source=|io.mend.image.dockerfile.path=)' "$file"; then
                 echo "Updating: $file"
               	echo -e "\nLABEL org.opencontainers.image.source=\"https://github.com/${{ github.repository }}/tree/main\"" >> "$file"
-                echo -e "LABEL io.mend.image.dockerfile.path=\"$file\"" >> "$file"
+                echo -e "LABEL io.mend.image.dockerfile.path=\"${file#./}\"" >> "$file"
               else
                 echo "$file is already containing these labels.."
               fi
@@ -30,8 +30,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Add labels to Dockerfile
           title: '[AUTO] Update Dockerfile Labels'
-          body: 'This PR automatically adds labels to the Dockerfile.'
-          branch: 'feature/update-dockerfile-labels'
+          body: 'This PR automatically adds Mend labels to the Dockerfile.'
+          branch: 'Security/update-dockerfile-labels-with-mend'
           branch-suffix: timestamp
           delete-branch: true
 
