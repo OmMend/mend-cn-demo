@@ -16,7 +16,7 @@ jobs:
           find . -type f -name "*Dockerfile*" | while read file; do
               if ! grep -qE '^LABEL (org.opencontainers.image.source=|io.mend.image.dockerfile.path=)' "$file"; then
                 echo "Updating: $file"
-              	echo -e "\n\nLABEL org.opencontainers.image.source=\"https://github.com/${{ github.repository }}/tree/main\"" >> "$file"
+              	echo -e "\nLABEL org.opencontainers.image.source=\"https://github.com/${{ github.repository }}/tree/main\"" >> "$file"
                 echo -e "LABEL io.mend.image.dockerfile.path=\"$file\"" >> "$file"
               else
                 echo "$file is already containing these labels.."
