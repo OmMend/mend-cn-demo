@@ -37,7 +37,7 @@ jobs:
       run: |
           curl -LO https://downloads.mend.io/cli/linux_amd64/mend
           chmod +x mend
-          ./mend image $DOCKER_REPO_NAME:$DOCKER_TAG --scope "*//My-GitHub-Example//*"
+          ./mend image $DOCKER_REPO_NAME:$DOCKER_TAG --scope "*//My-GitHub-Example//*" --fail-build
           ./mend image $DOCKER_REPO_NAME:$DOCKER_TAG --format sarif --filename results.sarif
       
     - name: Upload sarif
